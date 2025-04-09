@@ -88,11 +88,11 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-floating mb-3">
-                                @{
+                                @*@{
                                     var flatNo = Session["FlatNo"]?.ToString();
                                     var hideDiv = (flatNo != "104" && flatNo != "301") ? "style='display:none;'" : "";
-                                }
-                                <div class="text-center" @Html.Raw(hideDiv)>
+                                }*@
+                                <div class="text-center" @*@Html.Raw(hideDiv)*@>
                                     <button type="submit" class="btn btn-primary" onclick="SaveIncome()">SUBMIT</button>
                                     <button type="reset" class="btn btn-warning">RESET</button>
                                 </div>
@@ -237,10 +237,7 @@
         $("#txtMonth").val(currentMonth);
     });
 
-    @* AutoFocus *@
-    window.onload = function () {
-        document.getElementById("txtIncomeFrom").focus();
-    }
+
 </script>
 
 

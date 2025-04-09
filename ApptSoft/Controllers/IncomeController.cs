@@ -10,12 +10,13 @@ namespace ApptSoft.Controllers
     public class IncomeController : Controller
     {
         // GET: Income
-        public ActionResult Index()
-        {
-            return View();
-        }
+
         public ActionResult IncomeIndex()
         {
+            if (Session["Id"] == null)
+            {
+                return View("..\\Login\\Index");
+            }
             return View();
         }
         public ActionResult SaveIncome(IncomeModel model)

@@ -17,7 +17,7 @@
 
                     <!-- Floating Labels Form -->
                     <input id="hdnid" type="hidden" />
-                    <form class="row g-3">
+                    <div class="row g-3">
                         <div class="col-md-1">
                             <div class="form-floating">
                                 <input type="hidden" id="hdnId" />
@@ -34,27 +34,50 @@
                         </div>
 
 
-                        <div class="col-md-3">
-                            <div class="form-floating">
-                                <input type="file" class="form-control" id="file1">
-                                <label for="floatingResolved Proof">Complaint Proof<span class="text-danger">*</span></label>
-                            </div>
-                        </div>
                         <div class="col-md-4">
                             <div class="form-floating">
-                                <input type="text" class="form-control" id="txtTitle" placeholder="Complaint Title" maxlength="25">
-                                <label for="floatingComplaint Title">Complaint Title<span class="text-danger">*</span></label>
+                                <input type="file" class="form-control" id="file1">
+                                <label for="floatingResolved Proof">Complaint Proof (jpg/png)<span class="text-danger">*</span></label>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-5">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="txtTitle" placeholder="Complaint Title" list="complaintIssueList" maxlength="60">
+                                <label for="floatingComplaint Title">Complaint Title<span class="text-danger">*</span></label>
+                                <datalist id="complaintIssueList">
+                                    <option value="Intercom not working">
+                                    <option value="Water leakage">
+                                    <option value="Power backup not working">
+                                    <option value="Elevator not functioning">
+                                    <option value="Corridor lights not working">
+                                    <option value="Fire alarm beeping continuously">
+                                    <option value="Security camera not recording">
+                                    <option value="Common areas not clean">
+                                    <option value="Garbage not collected">
+                                    <option value="Water supply issue">
+                                    <option value="Parking-related issue">
+                                    <option value="Noise from common area">
+                                    <option value="Gym equipment broken">
+                                    <option value="Clubhouse AC not working">
+                                    <option value="Cracked tiles in lobby">
+                                    <option value="Broken benches in garden">
+                                    <option value="Gate barrier not working">
+                                    <option value="Pest control required">
+                                    <option value="Sewage smell in basement">
+                                    <option value="Playground equipment damaged">
+                                </datalist>
+
+                            </div>
+                        </div>
+                        <div class="col-md-2" hidden>
                             <div class="form-floating">
                                 <input type="Date" class="form-control" id="txtResolvedDate">
                                 <label for="floatingResolved Date">Resolved Date</label>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <div class="col-md-2" hidden>
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="txtResolvedBy" placeholder="Resolved By">
+                                <input type="text" class="form-control" id="txtResolvedBy" placeholder="Resolved By" value="1">
                                 <label for="floatingResolved By"> Resolved By</label>
                             </div>
                         </div>
@@ -82,7 +105,7 @@
                             <button type="submit" class="btn btn-primary" onclick="SaveComplaint()">SUBMIT</button>
                             <button type="reset" class="btn btn-warning">RESET</button>
                         </div>
-                    </form><!-- End floating Labels Form -->
+                    </div><!-- End floating Labels Form -->
 
                 </div>
             </div>
@@ -144,9 +167,7 @@
 
 @*AutoFocus*@
 <script>
-    window.onload = function () {
-        document.getElementById("txtFlatNo").focus();
-    }
+
     document.addEventListener("DOMContentLoaded", function () {
         let today = new Date().toISOString().split('T')[0];
         document.getElementById("txtComplaintDate").value = today;

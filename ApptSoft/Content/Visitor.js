@@ -9,7 +9,19 @@ var SaveVisitor = function () {
 
     if (Image.files.length > 0) {
         for (var i = 0; i < Image.files.length; i++) {
-            $formData.append('fb', Image.files[i]); // 'fb' must match controller param name
+           
+            var file = Image.files[i];
+            var fileType = file.type;
+            var fileName = file.name.toLowerCase();
+
+            // Check MIME type or file extension
+            if (fileType === "image/jpeg" || fileType === "image/png" ||
+                fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
+                $formData.append('fb', Image.files[i]); // 'fb' must match controller param name
+            } else {
+                alert("Only JPG and PNG files are allowed. File skipped: " + file.name);
+                return;
+            }
         }
     }
 
@@ -98,25 +110,58 @@ var GetVisitors = function () {
         async: false,
         success: function (response) {
             var html = "";
-
             $("#tblVisitors tbody").empty();
+            $("#visitorCards").empty();
+
             $.each(response.model, function (index, elementValue) {
-                html += "<tr><td>" + "<span onclick=EditVisitor(" + elementValue.Id + ")>" + elementValue.FlatNo + "</span>" +
-                    "</td><td>" + elementValue.Name +
-                    "</td><td>" + elementValue.Mobile +
-                    "</td><td>" + elementValue.Type +
-                    "</td><td>" + elementValue.VisitorDetails + 
-                    "</td><td>" + elementValue.Frequency +
-                    "</td><td>" + elementValue.VisitDate +
-                    "</td><td>" + elementValue.VisitTime +
-                    "</td><td>" + elementValue.VehicleNo +
-                    
-                    "</td><td>" + elementValue.NoOfPerson + "</td>";
-                    "<td>" + (elementValue.Consent ? "✔️" : "❌") +
-                    "</td><td><button type='button' class='btn btn-warning' value='Detail' onclick='VisitorDetail(" + elementValue.Id + ")'><i class='bi bi-eye-fill'></i></button></td></tr>";
+                // Table row
+                html += `<tr>
+        <td><span onclick="EditVisitor(${elementValue.Id})">${elementValue.FlatNo}</span></td>
+        <td>${elementValue.Name} + ${elementValue.NoOfPerson}</td>
+        <td>${elementValue.Mobile}</td>
+        <td>${elementValue.Type}</td>
+        <td>${elementValue.VisitorDetails}</td>
+        <td>${elementValue.Frequency}</td>
+        <td>${elementValue.VisitDate}</td>
+        <td>${elementValue.VisitTime}</td>
+        <td>${elementValue.VehicleNo}</td>
+        
+    </tr>`;
+
+                // Card view
+                var card = `
+        <div class="col-md-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                <img src="../Content/Img/Visitor/${elementValue.Photo}" class="card-img-top" style="height: 150px; object-fit: cover;" />
+                <div class="card-body">
+                    <h6 class="card-title">${elementValue.Name} (+${elementValue.NoOfPerson})</h6>
+                    <p class="card-text">
+                        <strong>Flat:</strong> <span onclick="EditVisitor(${elementValue.Id})" style="cursor:pointer; color:blue;">${elementValue.FlatNo}</span><br/>
+                        <strong>Mobile:</strong> ${elementValue.Mobile}<br/>
+                        <strong>Type:</strong> ${elementValue.Type}<br/>
+                        <strong>Details:</strong> ${elementValue.VisitorDetails}<br/>
+                        <strong>Frequency:</strong> ${elementValue.Frequency}<br/>
+                        <strong>Date:</strong> ${elementValue.VisitDate}<br/>
+                        <strong>Time:</strong> ${elementValue.VisitTime}<br/>
+                        <strong>Vehicle:</strong> ${elementValue.VehicleNo}
+                    </p>
+                </div>
+            </div>
+        </div>`;
+                $("#visitorCards").append(card);
             });
 
             $("#tblVisitors tbody").append(html);
+
         }
     });
 };
+function showVisitorTable() {
+    $("#tblVisitors").show();
+    $("#visitorCards").hide();
+}
+
+function showVisitorCards() {
+    $("#tblVisitors").hide();
+    $("#visitorCards").show();
+}

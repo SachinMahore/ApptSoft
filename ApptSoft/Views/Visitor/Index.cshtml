@@ -31,7 +31,7 @@
 
                     </div>
 
-                    <form class="row g-3">
+                    <div class="row g-3">
 
                         <div class="col-md-1">
                             <div class="form-floating">
@@ -61,7 +61,7 @@
                         <div class="col-md-2">
                             <div class="form-floating mb-4">
                                 <input type="file" class="form-control" id="file1" placeholder="Resolved By">
-                                <label for="floatingResolved By">Visitor Photo</label>
+                                <label for="floatingResolved By">Visitor Photo  (jpg/png)</label>
                             </div>
                         </div>
 
@@ -79,8 +79,33 @@
                         </div>
                         <div class="col-md-2">
                             <div class="form-floating mb-4">
-                                <input type="text" class="form-control" id="txtVisitorDetails" placeholder="Visitor Details">
-                                <label for="Visitor Details">Visitor Details</label>
+                                <input type="text" class="form-control" id="txtVisitorDetails" list="visitorDetailsList" placeholder="Visitor Details">
+                                <label for="txtVisitorDetails">Visitor Details</label>
+
+                                <datalist id="visitorDetailsList">
+                                    <option value="नळ दुरुस्त करण्यासाठी प्लंबर येत आहे">
+                                    <option value="वायरिंग कामासाठी इलेक्ट्रीशियन येत आहे">
+                                    <option value="झोमॅटो वरून अन्न डिलिव्हरी">
+                                    <option value="पाहुणा राहण्यासाठी येत आहे">
+                                    <option value="दैनिक स्वच्छतेसाठी मोलकरीण">
+                                    <option value="अ‍ॅमेझॉन वरून कुरिअर डिलिव्हरी">
+                                    <option value="लाँड्री पिकअपसाठी">
+                                    <option value="दैनिक दूध वितरणासाठी दूधवाला">
+                                    <option value="वृत्तपत्र विक्रेता">
+                                    <option value="गाडी स्वच्छ करणारा">
+                                    <option value="पाण्याच्या कॅनची डिलिव्हरी">
+                                    <option value="सुरक्षा तपासणीसाठी">
+                                    <option value="इंटरनेट तांत्रिक कर्मचारी">
+                                    <option value="एसी दुरुस्ती करणारा व्यक्ती">
+                                    <option value="घर साफसफाई सेवा">
+                                    <option value="फर्निचर डिलिव्हरी">
+                                    <option value="कीटकनाशक सेवा">
+                                    <option value="गॅस सिलिंडर डिलिव्हरी">
+                                    <option value="पेंटिंग कामाची तपासणी">
+                                    <option value="लहान दुरुस्तीसाठी सुतार">
+                                    <option value="कुटुंबातील सदस्य भेटीस येत आहे">
+                                </datalist>
+
                             </div>
                         </div>
 
@@ -138,7 +163,7 @@
                         </div>
 
 
-                    </form><!-- End floating Labels Form -->
+                    </div><!-- End floating Labels Form -->
                 </div>
 
             </div>
@@ -157,11 +182,14 @@
                         </div>
                     </div>
                     <hr />
-
-
+                    <div class="mb-3 text-end">
+                        <button class="btn btn-outline-primary btn-sm" onclick="showVisitorTable()">Table View</button>
+                        <button class="btn btn-outline-secondary btn-sm" onclick="showVisitorCards()">Card View</button>
+                    </div>
+                    <div class="row" id="visitorCards"></div>
                     <div class="table-responsive">
 
-                        <table id="tblVisitors" class="table table-bordered table-hover">
+                        <table id="tblVisitors" class="table table-bordered table-hover"  style="display: none;">
                             <thead class="text-white bg-dark">
                                 <tr>
                                     <td class="text-white bg-dark">Flat No</td>
@@ -171,11 +199,9 @@
                                     <td class="text-white bg-dark">Visitor Details</td>
                                     <td class="text-white bg-dark">Frequency</td>
                                     <td class="text-white bg-dark">Visit Date</td>
-                                    <td class="text-white bg-dark">Visit Time</td>
+                                    <td class="text-white bg-dark"> Time</td>
                                     <td class="text-white bg-dark">Vehicle No</td>
-                                    <td class="text-white bg-dark">No.Of Person</td>
-                                    <td class="text-white bg-dark">Consent</td>
-                                    <td class="text-white bg-dark">Action</td>
+
                                 </tr>
                             </thead>
                             <tbody> </tbody>
@@ -196,5 +222,12 @@
         let today = new Date().toISOString().split('T')[0];
         document.getElementById("txtDate").value = today;
         document.getElementById("txtFilterDate").value = today;
+        let now = new Date();
+        now.setHours(now.getHours() + 1); // Add 1 hour
+        // Format to HH:MM (24-hour format)
+        let hours = now.getHours().toString().padStart(2, '0');
+        let minutes = now.getMinutes().toString().padStart(2, '0');
+
+        document.getElementById("txtTime").value = `${hours}:${minutes}`;
     });
 </script>

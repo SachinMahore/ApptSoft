@@ -96,10 +96,10 @@ var GetCorpusFund = function () {
                 balanceamount = parseInt(balanceamount) + parseInt(elementvalue.BalanceAmount)
                 html += "<tr><td>"/* + elementvalue.Id + "</td><td>"*/
                     + elementvalue.FlatNo + "</td><td>"
-                    + elementvalue.Amount + "</td><td>"
+                    + elementvalue.ResidentName + "</td><td>"
                     + elementvalue.PaidAmount + "</td><td>"
-                    /*+ elementvalue.FlatType + "</td><td>"*/
-                    + elementvalue.BalanceAmount + "</td><td><button type='button' class='btn btn-warning' value='Detail' onclick='CorpusFundDetail(" + elementvalue.Id + ")'><i class='bi bi-eye-fill'></i></button></td></tr>";
+                    + elementvalue.BalanceAmount + "</td><td>"
+                    + elementvalue.CreateDate + "</td><td><button type='button' class='btn btn-warning' value='Detail' onclick='CorpusFundDetail(" + elementvalue.Id + ")'><i class='bi bi-eye-fill'></i></button></td></tr>";
             });
             $("#tblCorpusFund tbody").append(html);
             $("#lblamount").text("Total Amount = " + totalamount + " Rs");

@@ -6,7 +6,7 @@
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Content/Expenses.js"></script>
 <script src="~/Content/Resident.js"></script>
-<script src="~/Content/Maintenance.js"></script>
+
 <script src="~/Content/CorpusFund.js"></script>
 <script src="~/Content/Income.js"></script>
 <script src="~/Content/Complaint.js"></script>
@@ -97,7 +97,7 @@
                                         <i class="bi bi-tools"></i>
                                     </div>
                                     <div class="ps-3 Name">
-                                        <h6><span id="lblPaidamount2"></span></h6>
+                                        <h6><span id="lblPaidamount2"></span></h6><span id="txtMonth"></span>|<span id="txtYear"></span>
                                         @*<span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>*@
 
                                     </div>
@@ -362,3 +362,60 @@
     </div>
 
 </section>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var currentDate = new Date();
+        $("#txtYear").text(currentDate.getFullYear());
+        var currentMonth;
+        switch (currentDate.getMonth()) {
+            case 0: currentMonth = "January";
+                break;
+            case 1: currentMonth = "February";
+                break;
+            case 2: currentMonth = "March";
+                break;
+            case 3: currentMonth = "April";
+                break;
+            case 4: currentMonth = "May";
+                break;
+            case 5: currentMonth = "June";
+                break;
+            case 6: currentMonth = "July";
+                break;
+            case 7: currentMonth = "August";
+                break;
+            case 8: currentMonth = "September";
+                break;
+            case 9: currentMonth = "October";
+                break;
+            case 10: currentMonth = "November";
+                break;
+            case 11: currentMonth = "December";
+                break;
+        }
+        $("#txtMonth").text(currentMonth);
+        GetMaintenance();
+    });
+    var GetMaintenance = function () {
+        var flatno = $("#hdnFlatNo").val();
+        $.ajax({
+            url: "/Maintenance/GetMaintenance?Year=" + $("#txtYear").text() + "&month=" + $("#txtMonth").text() + "&flatNo=1",
+            method: "post",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            async: false,
+            success: function (response) {
+
+                var amount = 0;
+                $.each(response.Message, function (index, item) {
+                    amount += parseInt(item.Amount || 0);
+
+                });
+
+                $("#lblPaidamount2").text(amount + "/-");
+            }
+
+        });
+
+    }
+</script>

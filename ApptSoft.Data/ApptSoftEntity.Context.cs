@@ -34,21 +34,21 @@ public partial class ApptSoftEntities : DbContext
 
     public virtual DbSet<tblAMC> tblAMCs { get; set; }
 
-    public virtual DbSet<tblComplaint> tblComplaints { get; set; }
-
     public virtual DbSet<tblCorpusFund> tblCorpusFunds { get; set; }
 
-    public virtual DbSet<tblExpens> tblExpenses { get; set; }
-
     public virtual DbSet<tblIncome> tblIncomes { get; set; }
-
-    public virtual DbSet<tblMaintenance> tblMaintenances { get; set; }
 
     public virtual DbSet<tblResident> tblResidents { get; set; }
 
     public virtual DbSet<tblTenant> tblTenants { get; set; }
 
     public virtual DbSet<tblVisitor> tblVisitors { get; set; }
+
+    public virtual DbSet<tblExpens> tblExpenses { get; set; }
+
+    public virtual DbSet<tblMaintenance> tblMaintenances { get; set; }
+
+    public virtual DbSet<tblComplaint> tblComplaints { get; set; }
 
 }
 

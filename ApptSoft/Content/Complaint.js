@@ -16,7 +16,18 @@ var SaveComplaint = function () {
     var Image = document.getElementById('file1');
     if (Image.files.length > 0) {
         for (var i = 0; i < Image.files.length; i++) {
-            $formData.append('file1-' + i, Image.files[i]);
+            var file = Image.files[i];
+            var fileType = file.type;
+            var fileName = file.name.toLowerCase();
+
+            // Check MIME type or file extension
+            if (fileType === "image/jpeg" || fileType === "image/png" ||
+                fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
+                $formData.append('file1-' + i, file);
+            } else {
+                alert("Only JPG and PNG files are allowed. File skipped: " + file.name);
+                return;
+            }
         }
     }
     var id = $("#hdnid").val();

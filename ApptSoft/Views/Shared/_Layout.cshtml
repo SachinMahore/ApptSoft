@@ -48,12 +48,12 @@
             <i class="bi bi-list toggle-sidebar-btn"></i>
         </div><!-- End Logo -->
 
-        <div class="search-bar">
+        <!--<div class="search-bar">
             <form class="search-form d-flex align-items-center" method="POST" action="#">
                 <input type="text" name="query" placeholder="Search" id="myInput" title="Enter search keyword">
                 <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
-        </div><!-- End Search Bar -->
+        </div>--><!-- End Search Bar -->
 
         <nav class="header-nav ms-auto">
             <ul class="d-flex align-items-center">
@@ -68,9 +68,8 @@
                 <li class="nav-item dropdown pe-3">
 
                     <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#">
-                        <span >Welcome @Session["UserName"].ToString() | @Session["FlatNo"].ToString()  | </span>
-                        @*<img src="~/Content/assets/img/KASTURI.jpg" alt="Profile" class="rounded-Corners">*@
-                        <span><b> KASTURI-3</b></span>
+                        <span >Welcome <i>@Session["UserName"].ToString() | F- @Session["FlatNo"].ToString() </i> | <b> KASTURI-3</b></span>
+
                     </a><!-- End Profile Iamge Icon -->
                     <a class="dropdown-item d-flex align-items-center" href="../Login/Logout">
                         <i class="bi bi-box-arrow-right"></i>
@@ -135,12 +134,7 @@
 
 
 
-            <li class="nav-item" hidden>
-                <a class="nav-link collapsed" href="/CorpusFund/CorpusIndex">
-                    <i class="bi bi-envelope"></i>
-                    <span>Corpus Fund</span>
-                </a>
-            </li><!-- End Contact Page Nav -->
+
 
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/Expenses/ExpensesIndex">
@@ -159,7 +153,12 @@
                     <span>Income</span>
                 </a>
             </li><!-- End Login Page Nav -->
-
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="/CorpusFund/CorpusIndex">
+                    <i class="bi bi-envelope"></i>
+                    <span>Corpus Fund</span>
+                </a>
+            </li><!-- End Contact Page Nav -->
             <li class="nav-item">
                 <a class="nav-link collapsed" href="/Login/ChangePassword">
                     <i class="bi bi-lock-fill"></i>

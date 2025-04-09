@@ -26,7 +26,7 @@ namespace ApptSoft.Controllers
                 {
                     Session["Id"] = residentData.Id.ToString();
                     Session["FlatNo"] = residentData.FlatNo.ToString();
-                    Session["UserName"] = residentData.FirstName.ToString();
+                    Session["UserName"] = residentData.FirstName.Split(' ')[0];
                     return RedirectToAction("UserDashBoard");
                 }
                 else

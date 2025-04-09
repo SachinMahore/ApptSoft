@@ -2,6 +2,23 @@
     currentMontYear();
     ddlGetMaintenance();
     GetMaintenance();
+    $("#file1").on("change", function () {
+        var file = this.files[0];
+        var allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+        var maxSize = 1 * 1024 * 1024; // 1MB
+
+        if (file) {
+            if (!allowedTypes.includes(file.type)) {
+                $("#fileError").text("Only JPG and PNG images are allowed.").show();
+                this.value = ""; // Clear the input
+            } else if (file.size > maxSize) {
+                $("#fileError").text("Image must be less than 1MB.").show();
+                this.value = ""; // Clear the input
+            } else {
+                $("#fileError").hide(); // Valid file
+            }
+        }
+    });
 });
 
 var SaveMaintenace = function () {
@@ -9,7 +26,18 @@ var SaveMaintenace = function () {
     var Image = document.getElementById('file1');
     if (Image.files.length > 0) {
         for (var i = 0; i < Image.files.length; i++) {
-            $formData.append('file1-' + i, Image.files[i]);
+            var file = Image.files[i];
+            var fileType = file.type;
+            var fileName = file.name.toLowerCase();
+
+            // Check MIME type or file extension
+            if (fileType === "image/jpeg" || fileType === "image/png" ||
+                fileName.endsWith(".jpg") || fileName.endsWith(".jpeg") || fileName.endsWith(".png")) {
+                $formData.append('file1-' + i, file);
+            } else {
+                alert("Only JPG and PNG files are allowed. File skipped: " + file.name);
+                return;
+            }
         }
     }
     else {
@@ -46,6 +74,12 @@ var SaveMaintenace = function () {
         $("#txtTransaction").focus();
         return;
     }
+    if (paiddate === "") {
+        alert('Paid date. is required.');
+        $("#txtPaidDate").focus();
+        return;
+    }
+
     $formData.append('Id', id);
     $formData.append('FlatNo', flatno);
     $formData.append('Amount', amount);
@@ -109,27 +143,25 @@ var GetMaintenance = function () {
                 var card = `
         <div class="col-md-3 mb-4">
             <div class="card h-100 shadow-sm">
-                <img src="../Content/Img/Maintenance/${item.Receipt}" class="card-img-top" style="height: 180px; object-fit: cover;" />
+                <img src="../Content/Img/Maintenance/${item.Receipt}" class="card-img-top" style="height: 320px; object-fit: cover;" />
                 <div class="card-body">
-                    <h5 class="card-title">Flat: ${item.FlatNo}</h5>
+                    <h5 class="card-title">Flat: ${item.FlatNo}                          <button class="btn btn-success btn-sm" ${(flatno === '104' || flatno === '301') ? `onclick="EditMaintenance(${item.Id})"` : "disabled"}>Edit</button></h5>
+
                     <p class="card-text">
-                        <strong>Month:</strong> ${item.Month}<br/>
-                        <strong>Year:</strong> ${item.Year}<br/>
-                        <strong>Amount:</strong> ₹${item.Amount}<br/>
+                        <strong>MM/YY:</strong> ${item.Month}-${item.Year}<br/>
+                        <strong>Amt:</strong> ₹${item.Amount}
                         <strong>Mode:</strong> ${item.PaymentMode}<br/>
                         <strong>Txn No:</strong> ${item.TransactionNo}<br/>
-                        <strong>Paid:</strong> ${item.PaidDate}
-                    </p>
+                        <strong>Paid:</strong> ${item.PaidDate}<br/>
+                                           </p>
                 </div>
-                <div class="card-footer text-center">
-                    <button class="btn btn-success btn-sm" ${(flatno === '104' || flatno === '301') ? `onclick="EditMaintenance(${item.Id})"` : "disabled"}>Edit</button>
-                </div>
+ 
             </div>
         </div>`;
-                $("#tblMaintenance").append(html);
+              
                 $("#maintenanceCards").append(card);
             });
-
+            $("#tblMaintenance").append(html);
 
 
             $("#lblamount").text("Total Amount = " + amount);
@@ -151,8 +183,6 @@ function showCards() {
 }
 
 var ddlGetMaintenance = function () {
-
-
 
     $.ajax({
         url: "/Resident/GetResident",
@@ -276,3 +306,4 @@ function formatDate(dateStr) {
 
     return `${year}-${month}-${day}`;  // Convert to "yyyy-MM-dd"
 }
+

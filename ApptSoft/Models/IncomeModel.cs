@@ -37,10 +37,9 @@ namespace ApptSoft.Models
                 IncomeFrom = model.IncomeFrom,
                 Amount = model.Amount,
                 AddedDate = Convert.ToDateTime(model.AddedDate),
-                CreateBy = model.CreateBy,
-                CreateDate = Convert.ToDateTime(DateTime.Now),
-                UpdateBy = model.UpdateBy,
-                UpdateDate = Convert.ToDateTime(DateTime.Now)
+                CreateBy = Convert.ToInt32(HttpContext.Current.Session["Id"]),
+                CreateDate = DateTime.Now,
+
 
                 };
                   Db.tblIncomes.Add(incomeData);
@@ -59,10 +58,9 @@ namespace ApptSoft.Models
                          incomeData.IncomeFrom = model.IncomeFrom;
                          incomeData.Amount = model.Amount;
                          incomeData.AddedDate = Convert.ToDateTime(model.AddedDate);
-                         incomeData.CreateBy = model.CreateBy;
-                         incomeData.CreateDate = Convert.ToDateTime(DateTime.Now);
-                         incomeData.UpdateBy = model.UpdateBy;
-                         incomeData.UpdateDate = Convert.ToDateTime(DateTime.Now);
+
+                        incomeData.UpdateBy = Convert.ToInt32(HttpContext.Current.Session["Id"]);
+                         incomeData.UpdateDate = DateTime.Now;
 
                     };
                     Db.SaveChanges();
@@ -93,9 +91,8 @@ namespace ApptSoft.Models
                         IncomeFrom = model.IncomeFrom,
                         Amount = model.Amount,
                         AddedDate = model.AddedDate.Value.ToShortDateString(),
-                        CreateDate = DateTime.Now.ToString("dd/MM/yyyy"),
-                        UpdateBy = model.UpdateBy,
-                        UpdateDate = DateTime.Now.ToString("dd/MM/yyyy")
+                        CreateDate = model.CreateDate.ToString(),
+
                     });
                 }
             }
@@ -119,9 +116,7 @@ namespace ApptSoft.Models
                         IncomeFrom=model.IncomeFrom,
                         Amount=model.Amount,
                         AddedDate = model.AddedDate.Value.ToShortDateString(),
-                        CreateDate = DateTime.Now.ToString("dd/MM/yyyy"),
-                        UpdateBy = model.UpdateBy,
-                        UpdateDate = DateTime.Now.ToString("dd/MM/yyyy")
+                        CreateDate = model.CreateDate.ToString(),
                     });
                 }
             }

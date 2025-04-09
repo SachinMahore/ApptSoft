@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using ApptSoft.Data;
+using ApptSoft.Services;
 
 namespace ApptSoft.Models
 {
@@ -30,7 +31,7 @@ namespace ApptSoft.Models
         public string Mobile { get; set; }
 
         [Display(Name = "Visitor Photo")]
-        public byte[] Photo { get; set; } // If storing image as byte[]; otherwise use IFormFile or HttpPostedFileBase in controller/viewmodel
+        public string Photo { get; set; } // If storing image as byte[]; otherwise use IFormFile or HttpPostedFileBase in controller/viewmodel
 
         [Required]
         [Display(Name = "Visitor Type")]
@@ -70,7 +71,7 @@ namespace ApptSoft.Models
 
             if (fb != null && fb.ContentLength > 0)
             {
-                filepath = HttpContext.Current.Server.MapPath("~/Content/Img/");
+                filepath = HttpContext.Current.Server.MapPath("~/Content/Img/Visitor/");
                 DirectoryInfo di = new DirectoryInfo(filepath);
                 if (!di.Exists)
                 {
@@ -78,15 +79,12 @@ namespace ApptSoft.Models
                 }
 
                 fileName = fb.FileName;
+                
+                CommonService commonService = new CommonService();
+                byte[] compressedImage = commonService.CompressImageTo400Kb(fb.InputStream, 100);
                 sysFileName = DateTime.Now.ToFileTime().ToString() + Path.GetExtension(fb.FileName);
-                fb.SaveAs(Path.Combine(filepath, sysFileName));
-            }
-
-            byte[] photoBytes = null;
-            if (!string.IsNullOrEmpty(sysFileName))
-            {
-                string fullImagePath = Path.Combine(filepath, sysFileName);
-                photoBytes = File.ReadAllBytes(fullImagePath);
+                System.IO.File.WriteAllBytes(filepath + "//" + sysFileName, compressedImage);
+                //fb.SaveAs(Path.Combine(filepath, sysFileName));
             }
 
             if (model.Id == 0)
@@ -122,10 +120,7 @@ namespace ApptSoft.Models
                     visitorData.Name = model.Name;
                     visitorData.Address = model.Address;
                     visitorData.Mobile = model.Mobile;
-                    if (photoBytes != null)
-                    {
-                        visitorData.Photo = sysFileName;
-                    }
+
                     visitorData.Type = model.Type;
                     visitorData.Frequency = model.Frequency;
                     visitorData.VisitDate = Convert.ToDateTime(model.VisitDate);
@@ -162,7 +157,7 @@ namespace ApptSoft.Models
                         Name = visitor.Name,
                         Address = visitor.Address,
                         Mobile = visitor.Mobile,
-                        // Photo = visitor.Photo, // Optional: usually omitted unless converting to base64
+                         Photo = visitor.Photo, // Optional: usually omitted unless converting to base64
                         Type = visitor.Type,
                         Frequency = visitor.Frequency,
                         VisitDate = visitor.VisitDate.ToShortDateString(),
@@ -197,7 +192,7 @@ namespace ApptSoft.Models
                         Name = visitor.Name,
                         Address = visitor.Address,
                         Mobile = visitor.Mobile,
-                        // Photo = visitor.Photo, // Optional: usually omitted unless converting to base64
+                         Photo = visitor.Photo, // Optional: usually omitted unless converting to base64
                         Type = visitor.Type,
                         Frequency = visitor.Frequency,
                         VisitDate = visitor.VisitDate.ToShortDateString(),

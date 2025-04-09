@@ -1,4 +1,5 @@
 ﻿using ApptSoft.Data;
+using ApptSoft.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -43,8 +44,10 @@ namespace ApptSoft.Models
 
                 }
                 fileName = fb.FileName;
+                CommonService commonService = new CommonService();
+                byte[] compressedImage = commonService.CompressImageTo400Kb(fb.InputStream, 100);
                 sysFileName = DateTime.Now.ToFileTime().ToString() + Path.GetExtension(fb.FileName);
-                fb.SaveAs(filepath + "//" + sysFileName);
+                System.IO.File.WriteAllBytes(filepath + "//" + sysFileName, compressedImage);
                 if (!string.IsNullOrWhiteSpace(fb.FileName))
                 {
                     string afileName = HttpContext.Current.Server.MapPath("../Content/Img") + "/" + sysFileName;

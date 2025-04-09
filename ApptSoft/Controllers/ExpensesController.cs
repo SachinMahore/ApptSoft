@@ -11,16 +11,13 @@ namespace AppSoft.Controllers
     public class ExpensesController : Controller
     {
         // GET: Expenses
-        public ActionResult Index()
+
+        public ActionResult ExpensesIndex()
         {
             if (Session["Id"] == null)
             {
                 return View("..\\Login\\Index");
             }
-            return View();
-        }
-        public ActionResult ExpensesIndex()
-        {
             return View();
         }
 

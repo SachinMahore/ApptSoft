@@ -27,19 +27,22 @@
 
                     <!-- Floating Labels Form -->
 
-                    <form class="row g-3">
+                    <div class="row g-3">
 
                         <div class="col-md-1">
                             <div class="form-floating">
                                 <input id="hdnId" type="hidden" />
-                                <input type="text" class="form-control" id="txtFlatNo" value="@Session["FlatNo"].ToString()" disabled/>
+                                <input type="text" class="form-control" id="txtFlatNo" value="@Session["FlatNo"].ToString()" disabled />
                                 <label for="FlatNo Title">Flat No </label>
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-2">
                             <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="txtAmount" placeholder="Resolved By" value="1000">
-                                <label for="floatingResolved By">Amount<span class="text-danger">*</span></label>
+                                <select class="form-control" id="txtAmount">
+                                    <option selected value='1000'>1000</option>
+                                    <option value='1250'>1250</option>
+                                </select>
+                                 <label for="floatingResolved By">Amount<span class="text-danger">*</span></label>
                             </div>
                         </div>
                         <div class="col-md-1">
@@ -106,20 +109,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-2">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="txtTransaction" placeholder="Resolved By">
-                                <label for="floatingResolved By">Transaction No <span class="text-danger">*</span></label>
-                            </div>
-                        </div>
 
-
-                        <div class="col-md-2">
-                            <div class="form-floating mb-4">
-                                <input type="file" class="form-control" id="file1">
-                                <label for="">Receipt<span class="text-danger">*</span></label>
-                            </div>
-                        </div>
 
                         <div class="col-md-2">
                             <div class="form-floating mb-3">
@@ -133,14 +123,29 @@
                                 <label for="floatingResolved By">Due Date</label>
                             </div>
                         </div>
-
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary" onclick="SaveMaintenace()">Submit</button>
-                            <button type="reset" class="btn btn-warning">Reset</button>
+                        <div class="col-md-3">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="txtTransaction" placeholder="Transaction No" maxlength="49">
+                                <label for="floatingResolved By">Transaction No <span class="text-danger">*</span></label>
+                            </div>
                         </div>
 
 
-                    </form><!-- End floating Labels Form -->
+                        <div class="col-md-4">
+                            <div class="form-floating mb-4">
+                                <input type="file" class="form-control" id="file1">
+                                <label for="">Receipt (jpg/png)<span class="text-danger">*</span></label>
+                                <span id="fileError" class="text-danger" style="display:none;"></span>
+                            </div>
+                        </div>   
+                    <div class="col-md-4">
+                        <div class="form-floating mb-3">
+                            <button type="submit" class="btn btn-primary" onclick="SaveMaintenace()">Submit</button>
+                            <button type="reset" class="btn btn-warning">Reset</button>
+                        </div>
+                        </div>
+                
+                    </div><!-- End floating Labels Form -->
                 </div>
 
             </div>

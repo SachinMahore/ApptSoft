@@ -34,7 +34,7 @@ var SaveExpensesData = function () {
     var updateBy = $("#txtUpdateBy").val();
     var updateDate = $("#txtUpdateDate").val();
     // Check if any field is empty
-    if (!flatNo || !title || !month || !year || !amount || !paidDate || !paidAmount) {
+    if (!transactionNo || !title || !month || !year || !amount || !paidAmount) {
         alert("All fields are required. Please fill in all details.");
         return false; // Stop form submission
     }
@@ -136,13 +136,13 @@ var GetExpensesList = function () {
                 totalamount = parseInt(totalamount) + parseInt(elementValue.Amount)
                 Paidamount = parseInt(Paidamount) + parseInt(elementValue.PaidAmount)
 
-                html += "<tr><td>" + elementValue.Title +
-                    "</td><td>" + elementValue.Month +
+                html += "<tr><td><b>" + elementValue.Title +
+                    "</b></td><td>" + elementValue.Month +
                     "</td><td>" + elementValue.Year +
                     "</td><td>" + elementValue.Amount +
                     "</td><td>" + elementValue.PaidAmount +
                     "</td><td>" + elementValue.PaidDate +
-                    "</td><td>" + elementValue.PaidBy +
+                    "</td><td>" + elementValue.TransactionNo +
                     //"</td><td>" + elementValue.PaymentMode +
                     //"</td><td>" + elementValue.TransactionNo +
                     /* "</td><td><img src='../Content/Img/" + elementValue.Receipt + "'style='max-width:80px;max-height:80px;'/> " +*/

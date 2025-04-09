@@ -17,7 +17,7 @@ namespace ApptSoft.Models
         public string CreateDate { get; set; }
         public Nullable<int> UpdateBy { get; set; }
         public string UpdateDate { get; set; }
-
+        public string ResidentName { get; set; }
 
         public string SaveCorpusFundData(CorpusFundModel model)
         {
@@ -69,10 +69,24 @@ namespace ApptSoft.Models
         {
             ApptSoftEntities db = new ApptSoftEntities();
             List<CorpusFundModel> listcorpus = new List<CorpusFundModel>();
-            var corousData = db.tblCorpusFunds.ToList();
-            if (corousData != null)
+            var corpusData = (from corpus in db.tblCorpusFunds
+                              join resident in db.tblResidents
+                              on corpus.FlatNo equals resident.FlatNo
+                              orderby corpus.Id descending
+                              select new
+                              {
+                                  corpus.Id,
+                                  corpus.Amount,
+                                  corpus.BalanceAmount,
+                                  corpus.PaidAmount,
+                                  corpus.FlatNo,
+                                  resident.FirstName,
+                                  corpus.CreateDate
+                                  // Add any other fields you need
+                              }).ToList();
+            if (corpusData != null)
             {
-                foreach (var model in corousData)
+                foreach (var model in corpusData)
                 {
                     listcorpus.Add(new CorpusFundModel()
                     {
@@ -81,10 +95,8 @@ namespace ApptSoft.Models
                         Amount= model.Amount,
                         PaidAmount = model.PaidAmount,
                         BalanceAmount = model.BalanceAmount,
-                        CreateBy = model.CreateBy,
-                        CreateDate = DateTime.Now.ToString("dd/MM/yyyy"),
-                        UpdateBy = model.UpdateBy,
-                        UpdateDate = DateTime.Now.ToString("dd/MM/yyyy"),
+                        CreateDate = model.CreateDate.Value.ToString("dd/MM/yyyy"),
+                        ResidentName = model.FirstName,
                     });
                 }
             }

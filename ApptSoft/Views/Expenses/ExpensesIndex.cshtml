@@ -33,13 +33,13 @@
                                     <option value="Lights fitting">Lights fitting</option>
                                     <option value="Sweeping material">Sweeping material</option>
                                     <option value="Xerox + stationary">Xerox stationary</option>
-                                    <option value="CCTV/ Pump repairs etc.">CCTV Pump repairs etc.</option>
+                                    <option value="CCTV Pump repairs etc.">CCTV Pump repairs etc.</option>
                                 </select>
                                 <label for="Title"> Title</label>
                             </div>
                         </div>
 
-                        <div class="col-md-1">
+                        <div class="col-md-1" hidden>
                             <div class="form-floating">
                                 <select type="text" class="form-control" id="txtFlatNo"></select>
                                 <label for="FlatNo"> FlatNo</label>
@@ -146,11 +146,11 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-floating mb-3">
-                                @{
+                                @*@{
                                     var flatNo = Session["FlatNo"]?.ToString();
                                     var hideDiv = (flatNo != "104" && flatNo != "301") ? "style='display:none;'" : "";
-                                }
-                                <div class="text-center" @Html.Raw(hideDiv)>
+                                }*@
+                                <div class="text-center" @*@Html.Raw(hideDiv)*@>
                                     <button type="submit" class="btn btn-primary" onclick="SaveExpensesData()">SUBMIT</button>
                                     <button type="reset" class="btn btn-warning">RESET</button>
                                 </div>
@@ -169,9 +169,8 @@
 
                     <div class="table-responsive">
                         <div align="left">
-                            <b> <span id="lblamount"></span></b><br />
-                            <b> <span id="lblPaidamount"></span></b><br />
-                            <br />
+                            <b> <span id="lblamount"></span>    --|--   <span id="lblPaidamount"></span></b><br />
+                         
                         </div>
                         <table id="tblExpens" class="table table-bordered table-hover">
                             <thead class="text-white bg-dark">
@@ -182,15 +181,8 @@
                                     <td class="text-white bg-dark">Amount</td>
                                     <td class="text-white bg-dark">PaidAmount</td>
                                     <td class="text-white bg-dark">PaidDate</td>
-                                    <td class="text-white bg-dark">PaidBy</td>
-                                    @*<td class="text-white bg-dark">Receipt</td>*@
-                                    @*<td class="text-white bg-dark">PaymentMode</td>*@
-                                    @*<td class="text-white bg-dark">TransactionNo</td>*@
-                                    @*<td class="text-white bg-dark">Receipt</td>*@
-                                    @*<td class="text-white bg-dark">CreateBy</td>
-                                        <td class="text-white bg-dark">CreateDate</td>
-                                        <td class="text-white bg-dark">UpdateBy</td>
-                                        <td class="text-white bg-dark">UpdateDate</td>*@
+                                    <td class="text-white bg-dark">TransactionNo</td>
+   
 
                                 </tr>
                             </thead>

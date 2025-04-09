@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
+using ApptSoft.Services;
 
 namespace ApptSoft.Models
 {
@@ -37,11 +38,13 @@ namespace ApptSoft.Models
                 if (!di.Exists)
                 {
                     di.Create();
-
                 }
+                
                 fileName = fb.FileName;
+                CommonService commonService = new CommonService(); 
+                byte[] compressedImage = commonService.CompressImageTo400Kb(fb.InputStream,100);
                 sysFileName = model.FlatNo+model.Month+model.Year.ToString() + Path.GetExtension(fb.FileName);
-                fb.SaveAs(filepath + "//" + sysFileName);
+                System.IO.File.WriteAllBytes(filepath + "//" + sysFileName, compressedImage);
                 if (!string.IsNullOrWhiteSpace(fb.FileName))
                 {
                     string afileName = HttpContext.Current.Server.MapPath("../Content/Img/Maintenance") + "/" + sysFileName;
